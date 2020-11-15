@@ -1,2 +1,2 @@
-# dentelabe
+# Dente Labe
 Tooth game
