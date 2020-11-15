@@ -1,8 +1,18 @@
- const canvas = document.getElementById('main_canvas');
- const ctx = canvas.getContext('2d');
+const canvas = document.getElementById('main_canvas');
+const ctx = canvas.getContext('2d');
 
- const width = canvas.width = 800;
- const height = canvas.height = 500;
+   let width = canvas.width = window.innerWidth;
+   let height = canvas.height = window.innerHeight;
+
+window.addEventListener('resize', function(){
+   width = canvas.width = window.innerWidth;
+   height = canvas.height = window.innerHeight;
+})
+
+
+
+ // const width = canvas.width = 800;
+ // const height = canvas.height = 500;
  const candyList = [];
  const keys = [];
  const level =2;
@@ -18,7 +28,10 @@
    frameX: 1,
    frameY: 1,
    speed: 2,
-   moving: false
+   moving: false,
+   hitcount: 0,
+   collisionImmume: 0,
+   immuneStopTime: Date.now()
  }
 
  const playerSprite = new Image();
@@ -54,12 +67,12 @@ function movePlayer(){
 
     if (keys['ArrowLeft'] && player.x > 0) {
       player.x -= player.speed;
-      player.frameY = 0;
+      player.frameY = 0+ player.hitcount;
     }
 
     if (keys['ArrowRight'] && player.x < canvas.width - player.width) {
       player.x += player.speed;
-      player.frameY = 1;
+      player.frameY = 1 + player.hitcount;
     }
   }
   else {
@@ -126,8 +139,14 @@ function animate(){
    ctx.clearRect(0,0,canvas.width, canvas.height);
 
    drawSprite(playerSprite,player.width * player.frameX, player.height * player.frameY, player.width, player.height, player.x, player.y, player.width, player.height )
-   drawCandy()
+   drawCandy();
    movePlayer();
+   if (player.collisionImmume===0) {
+        collisionDetection();
+   } else {
+     checkImmuneValidity();
+   }
+
    // handlePlayerFrame();
 }
 
@@ -203,10 +222,34 @@ function sleep(resolve, ms) {
 
 
 function gameLoop(){
+//    while (!gameOver) {
+//     checkInputs()
+//     gameUpdate()
+//     showGameUpdates()
+// }
    startAnimating();
 
 }
 
 gameLoop();
 
+function collisionDetection() {
+    candyList.forEach(function(candy) {
+      if(candy.x > player.x && candy.x < player.x+player.width && candy.y >= player.y && candy.y <player.y+player.height) {
+                console.log("Ouch!");
+                   setTimeout(takeAHit(), 10000);
+            }
+        })
+}
 
+function takeAHit() {
+  player.hitcount += 2;
+  player.immuneStopTime= Date.now()+3000;
+  player.collisionImmume = 1;
+}
+
+function checkImmuneValidity() {
+  if (Date.now() > player.immuneStopTime ){
+      player.collisionImmume = 0;
+  }
+}
