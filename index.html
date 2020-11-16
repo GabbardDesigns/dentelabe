@@ -1,47 +1,94 @@
-<!doctype html>
-<html class="no-js" lang="">
-
+<html>
 <head>
-  <meta charset="utf-8">
-  <title></title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Animation with Sound Effects</title>
+    <script type="text/javascript">
+        var can, ctx, ball, x, y, xVec, yVec, direc,
+            rot = 0, gravity = 1, left = 70, right = 525, bottom = 325,
+            interval, centerOffset = -75, audio, sound = 0, button;
 
-  <meta property="og:title" content="">
-  <meta property="og:type" content="">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
+        function init() {
+            audio = document.getElementById("audio");
+            button = document.getElementById("button");
+            ball = document.getElementById("ball");
+            can = document.getElementById("can");
+            ctx = can.getContext("2d");
+            ctx.strokeStyle = "black";
+            // initialize position, speed, spin direction
+            x = 98;
+            y = 75;
+            xVec = 5.5;
+            yVec = 0;
+            direc = 1;
+            // draw lines for the ball to bounce off of
+            ctx.moveTo(0, bottom + 75);
+            ctx.lineTo(600, bottom + 75);
+            ctx.lineTo(600, 0)
+            ctx.stroke();
+            // set animation to repeat every 50 msec
+            interval = setInterval(animate, 50);
+        }
 
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="apple-touch-icon" href="icon.png">
-  <!-- Place favicon.ico in the root directory -->
+        function animate() {
+            model();
+            // clear canvas except for lines at edge
+            ctx.clearRect(0, 0, can.width - 1, can.height - 1);
+            draw();
+        }
 
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.css">
+        function model() {
+            rot += .1 * direc;
+            x += xVec;
+            yVec += gravity;
+            y += yVec;
+            bounceIf();
+        }
 
-  <meta name="theme-color" content="#fafafa">
+        function bounceIf() {
+            if (y >= bottom) {
+                audio.load();
+                y = bottom;
+                yVec = -1 * yVec - gravity;
+                // set audio for bottom bounce
+                audio.src = "audio\\Blippy Trance.mp3";
+                if (sound)
+                    audio.play();
+            }
+            if (x >= right || x <= left) {
+                xVec *= -1;
+                direc *= -1;
+                // set audio for side bounce
+                audio.src = "audio\Blippy Trance.mp3";
+                if (sound)
+                    audio.play();
+            }
+        }
+
+        function draw() {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(rot);
+            ctx.drawImage(ball, centerOffset, centerOffset);
+            ctx.restore();
+        }
+
+        function soundToggle() {
+            if (!sound) {
+                audio.load();
+                sound = 1;
+                button.value = "Turn Sounds Off";
+            } else {
+                sound = 0;
+                button.value = "Enable Sounds";
+            }
+        }
+    </script>
 </head>
-
-<body>
-
-<canvas width="320" height="240"></canvas>
-
-<script>
-  const canvas = document.querySelector('.myCanvas');
-  const width = canvas.width = window.innerWidth;
-  const height = canvas.height = window.innerHeight;
-</script>
-  <!-- Add your site or application content here -->
-  <script src="js/vendor/modernizr-3.11.2.min.js"></script>
-  <script src="js/plugins.js"></script>
-  <script src="js/main.js"></script>
-
-  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-  <script>
-    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
-    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
-  </script>
-  <script src="https://www.google-analytics.com/analytics.js" async></script>
+<body onload="init()" style="background-color:#e0e0e0">
+    <h2>Animation with Sound</h2>
+    <img id="ball" src="img\candy.png" style="display:none" />
+    <canvas id="can" height="400" width="600" style="position:relative; top:-50">
+    </canvas>
+    <audio id="audio" src="audio\Blippy Trance.mp3" style="display:none"></audio>
+    <input id="button" type="button" value="Enable Sounds" onclick="soundToggle()" />
 </body>
-
 </html>

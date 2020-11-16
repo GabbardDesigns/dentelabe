@@ -36,6 +36,15 @@ canvas{
   transform: translate(-50%, -50%);
 }
 
+ audio {
+            position: absolute;
+            top: 195px;
+            left: 60px;
+        }
+
+
+
+
 /*!**/
 /* * Remove text-shadow in selection highlight:*/
 /* * https://twitter.com/miketaylr/status/12228805301*/

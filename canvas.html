@@ -12,11 +12,26 @@
     margin: 0;
     overflow: hidden;
   }
+    #startBtn{
+      position: absolute;
+      margin:25%;
+      height:25%;
+      width: 50%;
+      border-radius: 8px;
+      font-size:10vh;
+    }
+
 </style>
-  <canvas id="main_canvas" >
-  <p>Add suitable fallback here.</p>
-</canvas>
-  <body>
+
+<body>
+    <canvas id="main_canvas" >
+    <p>Add suitable fallback here.</p>
+    </canvas>
+    <button type="button" id="startBtn" onclick="gameLoop()"> Play</button>
+    <audio id="backgroundMusic"> <source src="audio\Blippy Trance.mp3" type="audio/mpeg"> </audio>
+    <audio id="hurt"> <source src="audio\hurt.mp3" type="audio/mpeg"> </audio>
+    <audio id="dead"> <source src="audio\dead.mp3" type="audio/mpeg"> </audio>
+
 
   </body>
 <script type="application/javascript" src="js\main.js"></script>
