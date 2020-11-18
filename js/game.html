@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script>
+    "use strict";
+    let canvas;
+    let context;
+    let hurtSound;
+    let deadSound;
+    let backgroundMusic;
+    let startBtn = document.getElementById("startBtn");
+
+
+    window.onload = init;
+
+    function init(){
+
+        // Defines Canvas
+        canvas = document.getElementById('main-canvas');
+        context = canvas.getContext('2d');
+
+        // Defines Audio Assets
+        deadSound = document.getElementById("dead");
+        hurtSound = document.getElementById("hurt");
+        backgroundMusic = document.getElementById("backgroundMusic");
+        backgroundMusic.loop = true;
+
+
+
+        // Start the first frame request
+        window.requestAnimationFrame(gameLoop);
+    }
+
+    function gameLoop(timeStamp){
+        draw();
+
+        // Keep requesting new frames
+        window.requestAnimationFrame(gameLoop);
+    }
+
+    function draw(){
+        let randomColor = Math.random() > 0.5? '#ff8080' : '#0099b0';
+        context.fillStyle = randomColor;
+        context.fillRect(100, 50, 200, 175);
+    }
+</script>
+
+</body>
+</html>

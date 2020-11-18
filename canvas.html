@@ -12,6 +12,17 @@
     margin: 0;
     overflow: hidden;
   }
+  #mainContainer {
+    background-color: #EEEB68;
+    width: 70vw;
+    height:80vh;
+  }
+  #topContainer {
+    background-color: #EEEB68;
+    width: 70vw;
+    height:80vh;
+  }
+
     #startBtn{
       position: absolute;
       margin:25%;
@@ -23,11 +34,16 @@
 
 </style>
 
-<body>
-    <canvas id="main_canvas" >
-    <p>Add suitable fallback here.</p>
-    </canvas>
+<body >
+<div id="topContainer">
+
+</div>
+  <canvas id="main_canvas" >     <p>Add suitable fallback here.</p>     </canvas>
+
+
+      <img src="img\splash.png" width="100%"
     <button type="button" id="startBtn" onclick="gameLoop()"> Play</button>
+
     <audio id="backgroundMusic"> <source src="audio\Blippy Trance.mp3" type="audio/mpeg"> </audio>
     <audio id="hurt"> <source src="audio\hurt.mp3" type="audio/mpeg"> </audio>
     <audio id="dead"> <source src="audio\dead.mp3" type="audio/mpeg"> </audio>
