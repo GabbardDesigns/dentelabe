@@ -158,6 +158,14 @@ function pauseGame() {
     if (!gamePaused) startAnimating() // restart loop
 }
 
+function inchesToFeet(inches){
+   let feet = Math.floor(inches / 12);
+   inches %= 12;
+   let yourHeight = `You are ${feet} and ${inches} tall.`
+   return (feet, inches)
+}
+
+
 //
 // function checkInput() {
 //   if (keys['ArrowLeft'] || keys['ArrowRight'] || keys['Space'])
