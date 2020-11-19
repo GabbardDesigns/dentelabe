@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Canvas</title>
+    <title>Dente Labe</title>
 
       <link rel="stylesheet" href="css/main.css">
 
@@ -12,37 +12,58 @@
     margin: 0;
     overflow: hidden;
   }
-  #mainContainer {
-    background-color: #EEEB68;
-    width: 70vw;
-    height:80vh;
-  }
+
   #topContainer {
     background-color: #EEEB68;
-    width: 70vw;
-    height:80vh;
+    width: 100vw;
+    height:18vh;
+  }
+
+  #canvasContainer {
+    background-color: #e92;
+    width: 100vw;
+    height:72vh;
+  }
+
+  #canvasHolder, #main_canvas {
+    width: 50vw;
+    height:72vh;
+  }
+
+   #footerContainer {
+    background-color: #e92;
+    width: 100vw;
+    height:10vh;
   }
 
     #startBtn{
-      position: absolute;
-      margin:25%;
-      height:25%;
-      width: 50%;
+      /*position: absolute;*/
+      /*margin:25%;*/
+      /*height:25%;*/
+      /*width: 50%;*/
       border-radius: 8px;
-      font-size:10vh;
+      font-size:3vh;
     }
 
 </style>
 
 <body >
 <div id="topContainer">
+      <input id="soundButton" type="image"  src="img\\sound.png" onclick="soundToggle()" />
+    <button type="button" id="startBtn" onclick="gameLoop()"> Play</button>
+</div>
+<div id="canvasContainer">
+  <div id="canvasHolder">
+    <canvas id="main_canvas" >     <p>Add suitable fallback here.</p>     </canvas>
+  </div>
+
+  </div>
+
+<div id="footerContainer">
 
 </div>
-  <canvas id="main_canvas" >     <p>Add suitable fallback here.</p>     </canvas>
 
 
-      <img src="img\splash.png" width="100%"
-    <button type="button" id="startBtn" onclick="gameLoop()"> Play</button>
 
     <audio id="backgroundMusic"> <source src="audio\Blippy Trance.mp3" type="audio/mpeg"> </audio>
     <audio id="hurt"> <source src="audio\hurt.mp3" type="audio/mpeg"> </audio>
@@ -51,6 +72,7 @@
 
   </body>
 <script type="application/javascript" src="js\main.js"></script>
+
 </html>
 
 
