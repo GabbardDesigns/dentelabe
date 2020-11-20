@@ -48,6 +48,7 @@ Email taken, validated shown at the end
 ##### Things to Know
 
 When you resize the game pauses, please push "p" to unpause.
+This was designed to run on a desktop or laptop computer and not mobile (like most Canvas pizel based games).]
 There is audio, so please be aware of that.
 
 Note the game is not complete:
