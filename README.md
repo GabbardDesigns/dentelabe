@@ -47,4 +47,7 @@ Email taken, validated shown at the end
 
 
 
-Note the game is not complete, so you have to reload to replay.  Teh cookie storage is not implemented, so to you have to redo the form to play.
+Note the game is not complete:
+ You have to reload to replay.
+ The cookie storage is not implemented, so to you have to redo the form to play.
+ Th\ere is no game win logic.
