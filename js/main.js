@@ -41,7 +41,14 @@ function soundToggle() {
 
 }
 
+let firstRun = false;
 let timer = 0;
+
+
+
+
+
+
 
 let startBtn = document.getElementById("startBtn");
 
@@ -61,10 +68,32 @@ function stop() {
 }
 
  let level;
- let enemyMax;
+ let enemyMax =8;
 
  let candyList = [];
  const keys = [];
+
+
+ let widthMulti = 1;
+let heightMulti = 1;
+let gameOver = false;
+let gamePaused = false;
+let currentEnemyMax = 1
+let survived = 0;
+let player = {
+   x: .5*width,
+   y: .9*height,
+   width: 66,
+   height: 90,
+   frameX: 1,
+   frameY: 1,
+   speed: 5,
+   moving: false,
+   hitcount: 0,
+   collisionImmume: 0,
+   immuneStopTime: Date.now(),
+   blinking: false
+ }
 
 function setupGame()
 {
@@ -92,17 +121,17 @@ function setupGame()
 }
 
 let name, email, phone, version;
-let currentEnemyMax = 1
-let widthMulti = 1;
-let heightMulti = 1;
-let gameOver;
-let gamePaused;
-let survived;
-
-player = {
-  width: 66,
-  height: 90,
-}
+// let currentEnemyMax = 1
+// let widthMulti = 1;
+// let heightMulti = 1;
+// let gameOver;
+// let gamePaused;
+// let survived;
+//
+// player = {
+//   width: 66,
+//   height: 90,
+// }
 
 let rightWall = canvas.width - player.width;
  const playerSprite = new Image();
@@ -158,12 +187,12 @@ function pauseGame() {
     if (!gamePaused) startAnimating() // restart loop
 }
 
-function inchesToFeet(inches){
-   let feet = Math.floor(inches / 12);
-   inches %= 12;
-   let yourHeight = `You are ${feet} and ${inches} tall.`
-   return (feet, inches)
-}
+// function inchesToFeet(inches){
+//    let feet = Math.floor(inches / 12);
+//    inches %= 12;
+//    let yourHeight = `You are ${feet} and ${inches} tall.`
+//    return (feet, inches)
+// }
 
 
 //
@@ -270,7 +299,6 @@ function animate(){
     }
 
 //initilize candy pool
-p
   while (candyList.length <= enemyMax) {
           createCandy(randomIntFromInterval(0, 4))
     }
@@ -431,10 +459,6 @@ function between(x, min, max) {
 }
 
 
-
-
-
-
 // Credit this piece by copying the following to your credits section:
 //
 // "Frogs Legs Rag" Kevin MacLeod (incompetech.com)
@@ -450,8 +474,8 @@ function between(x, min, max) {
 // http://creativecommons.org/licenses/by/4.0
 
 //
-// Wholesome by Kevin MacLeod
-// Link: https://incompetech.filmmusic.io/song/5050-wholesome
+// Blippy Trance by Kevin MacLeod
+// Link: https://incompetech.filmmusic.io/song/5759-blippy-trance
 // License: http://creativecommons.org/licenses/by/4.0/
 
 //

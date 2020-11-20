@@ -7,47 +7,70 @@
 <body>
 <canvas id="canvas"></canvas>
 <script>
-    "use strict";
-    let canvas;
-    let context;
-    let hurtSound;
-    let deadSound;
-    let backgroundMusic;
-    let startBtn = document.getElementById("startBtn");
+    // "use strict";
+    // let canvas;
+    // let context;
+    // let hurtSound;
+    // let deadSound;
+    // let backgroundMusic;
+    // let startBtn = document.getElementById("startBtn");
+    //
+    //
+    // window.onload = init;
+    //
+    // function init(){
+    //
+    //     // Defines Canvas
+    //     canvas = document.getElementById('main-canvas');
+    //     context = canvas.getContext('2d');
+    //
+    //     // Defines Audio Assets
+    //     deadSound = document.getElementById("dead");
+    //     hurtSound = document.getElementById("hurt");
+    //     backgroundMusic = document.getElementById("backgroundMusic");
+    //     backgroundMusic.loop = true;
+    //
+    //
+    //
+    //     // Start the first frame request
+    //     window.requestAnimationFrame(gameLoop);
+    // }
+    //
+    // function gameLoop(timeStamp){
+    //     draw();
+    //
+    //     // Keep requesting new frames
+    //     window.requestAnimationFrame(gameLoop);
+    // }
+    //
+    // function draw(){
+    //     let randomColor = Math.random() > 0.5? '#ff8080' : '#0099b0';
+    //     context.fillStyle = randomColor;
+    //     context.fillRect(100, 50, 200, 175);
+    // }
+    //
 
 
-    window.onload = init;
+// Read JSON Datafile for codeLouisville asset information history
+let candyData=[];
 
-    function init(){
+// Read JSON Datafile for codeLouisville asset information history
+const getCLAssets = () => {
+  let request = new XMLHttpRequest();
+  request.open("GET", "https://cors-anywhere.herokuapp.com/https://www.gabbarddesigns.com/snackcart/data/codey.json", true);
+  request.onload = function() {
+    if (request.status >= 200 && request.status < 400) {
+      // Success!
+    candyData = JSON.parse(request.responseText);
+      // console.log(data);
 
-        // Defines Canvas
-        canvas = document.getElementById('main-canvas');
-        context = canvas.getContext('2d');
-
-        // Defines Audio Assets
-        deadSound = document.getElementById("dead");
-        hurtSound = document.getElementById("hurt");
-        backgroundMusic = document.getElementById("backgroundMusic");
-        backgroundMusic.loop = true;
-
-
-
-        // Start the first frame request
-        window.requestAnimationFrame(gameLoop);
     }
+  };
+  request.send();
+}
 
-    function gameLoop(timeStamp){
-        draw();
+getCLAssets();
 
-        // Keep requesting new frames
-        window.requestAnimationFrame(gameLoop);
-    }
-
-    function draw(){
-        let randomColor = Math.random() > 0.5? '#ff8080' : '#0099b0';
-        context.fillStyle = randomColor;
-        context.fillRect(100, 50, 200, 175);
-    }
 </script>
 
 </body>

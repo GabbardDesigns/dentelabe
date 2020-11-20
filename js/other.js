@@ -10,14 +10,85 @@ let allaudio = document.getElementsByTagName('audio');
 let silenced = true;
 const modal = document.getElementById('modal');
 const overlay = document.getElementById('overlay');
-
-
-
+let candyOptions=0 ;
+let candyData=[];
+let randNum = 0;
 function welcomeForm() {
      newGame.style.display = 'none';
      welcome.style.display = 'unset';
 
 }
+
+let startBtn = document.getElementById("startBtn");
+
+let width = canvas.width = window.innerWidth;
+let height = canvas.height =  window.innerWidth;
+
+let candyList = [];
+let level =1;
+let enemyMax = 8*level;
+let currentEnemyMax = 1
+
+// Define image assets
+
+ const playerSprite = new Image();
+ playerSprite.src = "img\\allteeth2.png"
+
+ // define backgrounds
+ const background = new Image();
+ background.src = "img\\splash.png"
+
+ const dead = new Image();
+ dead.src = "img\\dead.png"
+
+ const loading = new Image();
+ loading.src = "img\\dead.png"
+
+
+function toggleLoading(){
+        ctx.drawImage(loading, 0,0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = 'bold 20px Open Sans';
+        ctx.textAlign = 'center';
+        let dotCount= 0;
+        let dot = ". ";
+        let dots = " ";
+        if (dotCount < 5){
+            dots += dot;
+        } else {
+          dots = " ";
+        }
+
+        ctx.fillText(`Loading ${dots}`, .4 * width, .4 * height)
+}
+
+
+
+const getCandyData = () => {
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", "https://cors-anywhere.herokuapp.com/https://www.gabbarddesigns.com/snackcart/data/codey.json", true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+         candyData = JSON.parse(xhr.responseText);
+         candyOptions= candyData.length;
+        while (candyList.length < enemyMax) {
+            randNum = randomIntFromInterval(0, candyOptions)-1;
+            console.log(randNum)
+            createCandy(randNum)
+        }
+      toggleLoading();
+    }
+  };
+  xhr.send();
+
+}
+
+getCandyData();
+
+console.log(candyList);
+
+
+
 
 function soundToggle() {
 
@@ -45,14 +116,10 @@ function soundToggle() {
 let firstRun = false;
 let timer = 0;
 let sound = 0;
-var KEY_LEFT = 37;
-var KEY_RIGHT = 39;
-var KEY_SPACE = 32;
+// var KEY_LEFT = 37;
+// var KEY_RIGHT = 39;
+// var KEY_SPACE = 32;
 
-let startBtn = document.getElementById("startBtn");
-
-let width = canvas.width = window.innerWidth;
-let height = canvas.height =  window.innerWidth;
 
 window.addEventListener('resize', function(){
    pauseGame()
@@ -66,12 +133,12 @@ function stop() {
      clearTimeout(timer);
 }
 
- const level =1;
- const enemyMax = 8*level;
+
+
 
  // const width = canvas.width = 800;
  // const height = canvas.height = 500;
- const candyList = [];
+
  const keys = [];
 
 let name, email, phone, version;
@@ -79,7 +146,7 @@ let widthMulti = 1;
 let heightMulti = 1;
 let gameOver = false;
 let gamePaused = false;
-let currentEnemyMax = 1
+let score =0;
 let survived = 0;
 let player = {
    x: .5*width,
@@ -96,12 +163,7 @@ let player = {
    blinking: false
  }
 let rightWall = canvas.width - player.width;
- const playerSprite = new Image();
- playerSprite.src = "img\\allteeth2.png"
- const background = new Image();
- background.src = "img\\splash.png"
- const dead = new Image();
- dead.src = "img\\dead.png"
+
 
 // window.addEventListener('keydown', function (e){
 //   let code =""
@@ -116,6 +178,31 @@ let rightWall = canvas.width - player.width;
 //
 //  });
 
+function setupGame()
+{
+  score = 0;
+  enemyMax = 8*level;
+  level = 1;
+  candyList = [];
+  gameOver = false;
+  gamePaused = false;
+  survived = 0;
+  currentEnemyMax = 1;
+  player = {
+   x: .5*width,
+   y: .9*height,
+   width: 66,
+   height: 90,
+   frameX: 1,
+   frameY: 1,
+   speed: 5,
+   moving: false,
+   hitcount: 0,
+   collisionImmume: 0,
+   immuneStopTime: Date.now(),
+   blinking: false
+  }
+}
 
  window.addEventListener("keydown", function(event) {
   if (event.defaultPrevented) {
@@ -142,10 +229,17 @@ let rightWall = canvas.width - player.width;
        }
       break;
     case "KeyP":
-    case " ":
+   // case "Space":
       // Toggles Paused State
       pauseGame();
       break;
+
+
+   case "Space":
+      // Toggles Paused State
+      pauseGame();
+      break;
+
   }
 
 //  refresh();
@@ -266,8 +360,9 @@ function animate(){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.font = 'bold 20px Open Sans';
         ctx.textAlign = 'center';
+        score=  survived * 650;
         ctx.fillText(`Survived ${survived} of ${enemyMax * 5}`, .3 * width, 50)
-        ctx.fillText(`Score: ${survived * 650}`, .7 * width, 50)
+        ctx.fillText(`Score: ${score}`, .7 * width, 50)
         let frequency = 200;
         if (!player.blinking || Math.floor(Date.now() / frequency) % 2) {
           drawSprite(playerSprite, player.width * player.frameX, player.height * player.frameY, player.width, player.height, player.x, player.y, player.width, player.height)
@@ -281,9 +376,6 @@ function animate(){
 
 //initilize candy pool
 
-  while (candyList.length < enemyMax) {
-          createCandy(randomIntFromInterval(0, 4))
-    }
 
  //}
 
@@ -291,11 +383,9 @@ function drawCandy() {
   candyList.forEach((candy) => updateCandy(candy))
 }
 
- function updateCandy(candy){
-
+function updateCandy(candy){
      //moveCandy()
      candy.y += candy.speed;
-
      candy.rotation+= 6;
 
       //checkOffScreen()
@@ -329,18 +419,13 @@ function drawCandy() {
 
     }
 
- function createCandy( id =2){
-   if (id === 1){
-      buildCandy("img\\redc.png", 50, 50, 0, 0, 'redC')
-    }
-    else if (id === 2){
-      buildCandy("img\\spear.png", 50, 50, 0, 0, 'spearmint')
-   }
-   else if (id === 3){
-       buildCandy("img\\gumdrop.png", 50, 50, 0, 0, 'gumdrop')
-   }
 
-   function buildCandy( path, w, h, frameX, frameY)
+function createCandy(randNum) {
+
+  buildCandy(candyData[randNum].candySpriteSRC, parseInt(candyData[randNum].w), parseInt(candyData[randNum].h))
+}
+
+   function buildCandy( path, w, h)
    {
 
      let candy = {
@@ -349,8 +434,8 @@ function drawCandy() {
        y: 0,
        width: w,
        height: h,
-       frameX: frameX,
-       frameY: frameY,
+       frameX: 0,
+       frameY: 0,
        speed: (4 * Math.random()) +2,
        moving: false,
        id: candyList.length,
@@ -359,21 +444,18 @@ function drawCandy() {
 
      candyList[candyList.length] = candy;
 
-   }}
-
-
-
+   }
 
 function sleep(resolve, ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
 
 function gameLoop(){
  //while(!gameOver) {
    startBtn.style.display = 'none';
    canvas.style.display = '';
    backgroundMusic.play();
+   toggleLoading();
    startAnimating();
 // }
 }
@@ -389,12 +471,14 @@ function deadState(){
 
     ctx.textAlign="center";
     ctx.fillText(`Sorry ${name.value}`, canvas.width*.75, canvas.height/3 );
-    ctx.fillText("Space Invaders: ", canvas.width*.75, canvas.height/3 +40 );
+    ctx.fillText(`You scored ${score}.`, canvas.width*.75, canvas.height/3 +40 );
     ctx.font="16px Arial";
     drawSprite(playerSprite, player.width * player.frameX, player.height * player.frameY, player.width, player.height, player.x, player.y, player.width, player.height);
     ctx.fillText("Press 'Space' or touch to start.", canvas.width / 2, canvas.height/2);
 
     pauseGame()
+
+
 }
 
 function collisionDetection(candyStart, candyEnd , playerStart, playerEnd) {
@@ -402,7 +486,6 @@ function collisionDetection(candyStart, candyEnd , playerStart, playerEnd) {
                 console.log("Ouch!");
                 takeAHit();
             }
-
 }
 
 function takeAHit() {
@@ -435,11 +518,6 @@ function checkImmuneValidity() {
 function between(x, min, max) {
   return x >= min && x <= max;
 }
-
-
-
-
-
 
 // Credit this piece by copying the following to your credits section:
 //
@@ -512,22 +590,6 @@ function between(x, min, max) {
 
 
 // read the local play log file
-
-
-
-// const csv = require('csv-parser');
-// const fs = require('fs');
-//
-// fs.createReadStream('data\\playrecord.csv')
-//   .pipe(csv())
-//   .on('data', (row) => {
-//     console.log(row);
-//   })
-//   .on('end', () => {
-//     console.log('CSV file successfully processed');
-//   });
-
-
 // connect to API URL (gabbarddesigns.com/gameoptions.csv)
 // create request
 
@@ -599,3 +661,5 @@ function init(){
 
 
 }
+
+
