@@ -39,10 +39,12 @@ CL REQUIREMENTS (Installation, test files, and logins at the bottom of this file
 
 ##### Implement a regular expression (regex) to ensure a field either a phone number or an email address is always stored and displayed in the same format
 
-
+Email taken, validated shown at the end
 
  -------------
 ##### Implement CanvasAPI
   js\app.js   |   pretty much the rest of the entire thing
 
 
+
+Note the game is not complete, so you have to reload to replay.  Teh cookie storage is not implemented, so to you have to redo the form to play.

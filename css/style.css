@@ -222,6 +222,12 @@ Initializer
   max-width: 50%;
 }
 
+#modal input{
+  min-width: 70%;
+  max-width: 70%;
+}
+
+
 #modal_X {
   color: #aaaaaa;
   float: right;
