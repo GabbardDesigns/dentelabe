@@ -45,10 +45,14 @@ Email taken, validated shown at the end
 ##### Implement CanvasAPI
   js\app.js   |   pretty much the rest of the entire thing
 
+##### Things to Know
 
 When you resize the game pauses, please push "p" to unpause.
+There is audio, so please be aware of that.
+
 Note the game is not complete:
  You have to reload to replay.
  The cookie storage is not implemented, so to you have to redo the form to play.
  There is no game win logic.
+ The mute sound button has to be in focus, so click twice to mute the first time.
 
