@@ -20,7 +20,8 @@ function welcomeForm() {
 }
 
 let startBtn = document.getElementById("startBtn");
-
+let version = "Candy";
+let versionUrl ='https://cors-anywhere.herokuapp.com/https://www.gabbarddesigns.com/snackcart/data/candy.json';
 let width = canvas.width = window.innerWidth;
 let height = canvas.height =  window.innerWidth;
 
@@ -62,17 +63,32 @@ function toggleLoading(){
         ctx.fillText(`Loading ${dots}`, .4 * width, .4 * height)
 }
 
+function getVersion(versionPass){
+   console.log("VersionPass = " + versionPass);
+   switch(versionPass){
+     case "Candy":
+       versionUrl =`https://cors-anywhere.herokuapp.com/https://www.gabbarddesigns.com/snackcart/data/candy.json`;
+       break;
+
+     case "CodeLouisville":
+     versionUrl = `https://cors-anywhere.herokuapp.com/https://www.gabbarddesigns.com/snackcart/data/codey.json`;
+     break;
+   }
+
+}
 
 
-const getCandyData = () => {
+
+const getCandyData = (myVersion) => {
+  versionUrl = myVersion;
   let xhr = new XMLHttpRequest();
-  xhr.open("GET", "https://cors-anywhere.herokuapp.com/https://www.gabbarddesigns.com/snackcart/data/codey.json", true);
+  xhr.open("GET", versionUrl, true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
          candyData = JSON.parse(xhr.responseText);
-         candyOptions= candyData.length;
+         candyOptions= candyData.length-1;
         while (candyList.length < enemyMax) {
-            randNum = randomIntFromInterval(0, candyOptions)-1;
+            randNum = randomIntFromInterval(0, candyOptions);
             console.log(randNum)
             createCandy(randNum)
         }
@@ -83,7 +99,7 @@ const getCandyData = () => {
 
 }
 
-getCandyData();
+
 
 console.log(candyList);
 
@@ -141,7 +157,7 @@ function stop() {
 
  const keys = [];
 
-let name, email, phone, version;
+let name, email, phone;
 let widthMulti = 1;
 let heightMulti = 1;
 let gameOver = false;
@@ -456,6 +472,7 @@ function gameLoop(){
    canvas.style.display = '';
    backgroundMusic.play();
    toggleLoading();
+   getCandyData(versionUrl);
    startAnimating();
 // }
 }
@@ -472,9 +489,10 @@ function deadState(){
     ctx.textAlign="center";
     ctx.fillText(`Sorry ${name.value}`, canvas.width*.75, canvas.height/3 );
     ctx.fillText(`You scored ${score}.`, canvas.width*.75, canvas.height/3 +40 );
+    ctx.fillText(`Your email is ${email}.`, canvas.width*.75, canvas.height/3 +80 );
     ctx.font="16px Arial";
-    drawSprite(playerSprite, player.width * player.frameX, player.height * player.frameY, player.width, player.height, player.x, player.y, player.width, player.height);
-    ctx.fillText("Press 'Space' or touch to start.", canvas.width / 2, canvas.height/2);
+//    drawSprite(playerSprite, player.width * player.frameX, player.height * player.frameY, player.width, player.height, player.x, player.y, player.width, player.height);
+//    ctx.fillText("Press 'Space' or touch to start.", canvas.width / 2, canvas.height/2);
 
     pauseGame()
 
@@ -593,7 +611,6 @@ function between(x, min, max) {
 // connect to API URL (gabbarddesigns.com/gameoptions.csv)
 // create request
 
-const emailValidation =/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 
 //
 //  function setCookie(cname, cvalue, exdays) {
@@ -610,11 +627,15 @@ const emailValidation =/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 //   return matches ? decodeURIComponent(matches[1]) : undefined;
 // }
 
+// Email Validation
+
+const emailValidation =/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+
 function savetoCookies() {
                 name =  document.forms["RegForm"]["Name"];
                 email = document.forms["RegForm"]["eMail"];
-//                phone = document.forms["RegForm"]["Telephone"];
-                version = document.forms["RegForm"]["Version"];
+                versionID = document.forms["RegForm"]["Version"];
+                version = versionID.value;
 
                 if (name.value == "") {
                     window.alert("Please enter your name.");
@@ -629,19 +650,15 @@ function savetoCookies() {
                     return false;
                 }
 
-                // if (phone.value == "") {
-                //     window.alert(
-                //       "Please enter your telephone number.");
-                //     phone.focus();
-                //     return false;
-                // }
-//
 //                  setCookie(name, name.value, 90);
 //                  setCookie(email, email.value, 90);
-// //                 setCookie(phone, phone.value, 90);
+//                  setCookie(phone, phone.value, 90);
 //                  setCookie(version, version.value, 90);
-                 closeModal()
-                 gameLoop()
+
+                 closeModal();
+                 getVersion(version);
+                 console.log(version);
+                 gameLoop();
               return false;
             }
 
@@ -650,16 +667,4 @@ function closeModal(){
         modal.style.display = 'none';
         overlay.style.display = 'none';
 }
-
-function showCredits(){
-
-}
-
-
-
-function init(){
-
-
-}
-
 
