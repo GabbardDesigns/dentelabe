@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -43,32 +43,31 @@
         <p class="modalText"> Well, there is one more step.  You see this game is part of a coding class, a capstone project of sorts.  But it turns out people don't know if using CanVasAPi meets any of the requirements, and while being able to take multiple inputs and things is great... I digress.
           </p>
         <p class="modalText"> This form is just one of those things you have to do.  If you want to play the internet's most popular game about a tooth and candy with a latin name created by Patrick Gabbard, you have to fill out the form.</p>
-        <button class="button new" onclick="welcomeForm()">Get Started</button><br />
+        <button class="button act" onclick="welcomeForm()">Get Started</button><br />
       </div>
       <!--/#order_Completed-->
 
       <!--Modal content for alert when creating a new order-->
       <div class="modal_message" id="welcome">
         <form name="RegForm" onsubmit="return savetoCookies()" method="get">
-        <p>Name: <input type="text" size="65" name="Name" /></p>
+        <p><label class="labels" for="name">Name</label> <input  id="name" type="text" size="65" name="Name" /></p>
         <br />
-        <p>E-mail Address: <input type="text" size="65" name="eMail" /></p>
+        <p><label class="labels" for="eMail">eMail</label> <input id="eMail" type="text" size="65" name="eMail" /></p>
+        <p>It doesn't really need to be your email address, just any valid email.</p>
 <!--        <p>Height (in inches): <input type="text"  size="65" name="formHeight" /></p>-->
 <!--        <p>Favorite Number Under 10000: <input type="text"  size="65" name="fav10000" /></p>-->
 <!--        <p>Favorite Color:</p>  <input type="text"  size="65" name="favColor" /></p>-->
 <!--        <p>-->
           <h2>SELECT YOUR PREFERRED VERSION</h2>
           <p> Be sure to reload the page and try both flavors.<p>
-            <select name="Version">
+          <p id="modalChoice"><select name="Version" >
                 <option value="Candy">Candy</option>
                 <option value="CodeLouisville">Code Louisville</option>
             </select>
         </p>
-        <p>
-            <input type="submit"
-                   value="Send" name="Submit" />
-            <input type="reset"
-                   value="Reset" name="Reset" />
+        <p class="modalButtons" id="modalButtonHolder">
+            <input class="button act" id="modalSubmitButton" type="submit" value="send" name="Submit" />
+            <input class="button reset" id="modalResetButton" type="reset"  value="Reset" name="Reset" />
         </p>
     </form>
       </div>

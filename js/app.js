@@ -30,6 +30,7 @@ let level =1;
 let enemyMax = 8*level;
 let currentEnemyMax = 1
 
+let loading = true;
 // Define image assets
 
  const playerSprite = new Image();
@@ -42,26 +43,37 @@ let currentEnemyMax = 1
  const dead = new Image();
  dead.src = "img\\dead.png"
 
- const loading = new Image();
- loading.src = "img\\dead.png"
+ const paused = new Image();
+ paused.src = "img\\paused.png"
+
+ const loading1 = new Image();
+ loading1.src = "img\\loading1.png"
+
+ const loading2 = new Image();
+ loading2.src = "img\\loading2.png"
+
+ const loading3 = new Image();
+ loading3.src = "img\\loading3.png"
+
+ const loading4 = new Image();
+ loading4.src = "img\\loading4.png"
+
+ const loading5 = new Image();
+ loading5.src = "img\\loading5.png"
 
 
-function toggleLoading(){
-        ctx.drawImage(loading, 0,0, canvas.width, canvas.height);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.font = 'bold 20px Open Sans';
-        ctx.textAlign = 'center';
-        let dotCount= 0;
-        let dot = ". ";
-        let dots = " ";
-        if (dotCount < 5){
-            dots += dot;
-        } else {
-          dots = " ";
-        }
-
-        ctx.fillText(`Loading ${dots}`, .4 * width, .4 * height)
-}
+// function toggleLoading(){
+//    while (loading) {
+//       for (let i = 0; i < 6; i++) {
+//        setTimeout(() => {
+//        ctx.clearRect(0, 0, canvas.width, canvas.height);
+//        ctx.drawImage(loading1, 0, 0, canvas.width, canvas.height);
+//        //ctx.fillText(`Loading ${dots}`, .4 * width, .4 * height)
+//      }, 1000);
+//    }
+//    }
+//    }
+// }
 
 function getVersion(versionPass){
    console.log("VersionPass = " + versionPass);
@@ -92,7 +104,7 @@ const getCandyData = (myVersion) => {
             console.log(randNum)
             createCandy(randNum)
         }
-      toggleLoading();
+      loading=false;
     }
   };
   xhr.send();
@@ -135,19 +147,25 @@ let sound = 0;
 // var KEY_LEFT = 37;
 // var KEY_RIGHT = 39;
 // var KEY_SPACE = 32;
-
-
-window.addEventListener('resize', function(){
-   pauseGame()
-   width = canvas.width = window.innerWidth;
-   height = canvas.height = window.innerHeight;
-   player.y = .5 * width;
-   player.x = .5 * height;
-})
-
-function stop() {
-     clearTimeout(timer);
-}
+//
+// function resizedw(){
+//    setTimeout(pauseGame, 1000);
+//    width = canvas.width = window.innerWidth;
+//    height = canvas.height = window.innerHeight;
+//    player.y = .8 * width;
+//    player.x = .7 * height;
+// }
+//
+// let doit;
+//
+// window.addEventListener('resize', function(){
+//   clearTimeout(doit);
+//   doit = setTimeout(resizedw, 1000);
+// });
+//
+// function stop() {
+//      clearTimeout(timer);
+// }
 
 
 
@@ -281,9 +299,18 @@ function setupGame()
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function pauseGame() {
+function pauseGame(scale=false) {
     gamePaused = !gamePaused; // toggle the gamePaused value (false <-> true)
-    if (!gamePaused) startAnimating() // restart loop
+  if (gamePaused || scale){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(paused, 0, 0, canvas.width, canvas.height);
+
+  }
+  else (!gamePaused)
+  {
+    startAnimating(); // restart loop
+  }
+    scale= false;
 }
 
 //
@@ -350,7 +377,6 @@ function updatePlayerFrame(){
    fpsInterval = 1000/fps;
    then = Date.now();
    startTime = then;
-
    animate();
  }
 
@@ -362,6 +388,8 @@ function animate(){
       if (canvas.width !== reSize.width || canvas.height !== reSize.height) {
         widthMulti = reSize.width/canvas.width ;
         heightMulti = reSize.height/canvas.height ;
+        player.X = player.X * heightMulti;
+        player.Y = player.Y * widthMulti;
 
         // canvas.width = reSize.width;
         // canvas.height = reSize.height;
@@ -415,6 +443,7 @@ function updateCandy(candy){
      let candySprite = new Image();
      candySprite.src = candy.candySpriteSRC;
 
+      drawSprite(candySprite, candy.frameX * candy.width, candy.frameY * candy.height, candy.width, candy.height, candy.x, candy.y, candy.width, candy.height)
       if  (player.collisionImmume===0) {
             if (between(player.x, candy.x, candy.x + candy.width)){
                   collisionDetection(candy.y, candy.height, player.y, player.height);
@@ -431,7 +460,7 @@ function updateCandy(candy){
            }
 
 
-     drawSprite(candySprite, candy.frameX * candy.width, candy.frameY * candy.height, candy.width, candy.height, candy.x, candy.y, candy.width, candy.height)
+
 
     }
 
@@ -471,8 +500,8 @@ function gameLoop(){
    startBtn.style.display = 'none';
    canvas.style.display = '';
    backgroundMusic.play();
-   toggleLoading();
    getCandyData(versionUrl);
+   // toggleLoading();
    startAnimating();
 // }
 }
@@ -480,6 +509,7 @@ function gameLoop(){
 // gameLoop();
 
 function deadState(){
+    pauseGame()
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(dead, 0,0, canvas.width, canvas.height);
     ctx.font="24px Helvetica";
@@ -493,7 +523,7 @@ function deadState(){
     ctx.font="16px Arial";
     ctx.fillText("You must reload the page to replay.  Sorry", canvas.width / 2, canvas.height/2);
 
-    pauseGame()
+
 
 
 }
