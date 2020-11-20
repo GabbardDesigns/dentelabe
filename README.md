@@ -46,8 +46,9 @@ Email taken, validated shown at the end
   js\app.js   |   pretty much the rest of the entire thing
 
 
-
+When you resize the game pauses, please push "p" to unpause.
 Note the game is not complete:
  You have to reload to replay.
  The cookie storage is not implemented, so to you have to redo the form to play.
- Th\ere is no game win logic.
+ There is no game win logic.
+
