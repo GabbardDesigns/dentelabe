@@ -491,8 +491,7 @@ function deadState(){
     ctx.fillText(`You scored ${score}.`, canvas.width*.6, canvas.height/3 +40 );
     ctx.fillText(`Your email is ${email.value}.`, canvas.width*.6, canvas.height/3 +80 );
     ctx.font="16px Arial";
-//    drawSprite(playerSprite, player.width * player.frameX, player.height * player.frameY, player.width, player.height, player.x, player.y, player.width, player.height);
-//    ctx.fillText("Press 'Space' or touch to start.", canvas.width / 2, canvas.height/2);
+    ctx.fillText("You must reload the page to replay.  Sorry", canvas.width / 2, canvas.height/2);
 
     pauseGame()
 
