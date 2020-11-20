@@ -10,13 +10,13 @@
   - CSS
 
 
-Dente labe is a canvas API game that was developed to provide minutes of fun for all.  Although the game is not finished, the code Louisville requirements should have been met.
+Dente labe is a canvas API game that was developed to provide minutes of fun for all. Although the game is not finished, the code Louisville requirements should have been met.
 
-This game was born out of an idea my kids and I had for a game when we attended a halloween game jam.  I mentioned the "scariest" thing about halloweeen was the cavities and "tooth pain".  The kids loved this idea for a game and so "dente labe" was born.  All rtwork, sound effects, and game design are mine.  The background track is Blippy Trance by Kevin MacLeod.
+This game was born out of an idea my kids and I had for a game when we attended a Halloween game jam. I mentioned the "scariest" thing about Halloween was the cavities and "tooth pain". The kids loved this idea for a game and so "dente labe" was born. All artwork, sound effects, and game design are mine. The background track is Blippy Trance by Kevin MacLeod.
 
-This is a work in progress and has a lot of room for improvement in refactoring and dryer code.  This is the first javascript game I have created, so keep that in mind as you review it.  
+This is a work in progress and has a lot of room for improvement in refactoring and dryer code. This is the first JavaScript game I have created, so keep that in mind as you review it.
 
-Also, this was initially create as a part of code louisville, and since it was uncertain if using using Canvas API would meet the requirements, I have also met the following:
+Also, this was initially create as a part of code Louisville, and since it was uncertain if using Canvas API would meet the requirements, I have also met the following:
 
 CL REQUIREMENTS (Installation, test files, and logins at the bottom of this file)
 -------------
