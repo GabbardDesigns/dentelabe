@@ -1,0 +1,118 @@
+<html>
+<head>
+    <title>Animation with Sound Effects</title>
+
+  <style>
+.button{
+   background: url("your_normal_image.jpg") no-repeat 0 0;
+   height: 123px;
+   width: 123px;
+   }
+.button:hover, .button.some_class{
+   background: url("your_hover_image.jpg") no-repeat 0 0;
+   }
+.button input[type="button"]{
+   opacity: 0;}
+
+</style>
+
+
+</head>
+<body style="background-color:#e0e0e0">
+    <h2>Animation with Sound</h2>
+    <img id="ball" src="img\candy.png" style="display:none" />
+<!--    <canvas id="can" height="400" width="600" style="position:relative; top:-50">-->
+<!--    </canvas>-->
+
+    <audio id="audio" src="audio\Blippy Trance.mp3" style="display:none"></audio>
+    <button id="soundButton" type="image"  src="img\\sound.png" onclick="soundToggle()" />
+
+
+    <script type="text/javascript">
+        var can, ctx, ball, x, y, xVec, yVec, direc,
+            rot = 0, gravity = 1, left = 70, right = 525, bottom = 325,
+            interval, centerOffset = -75, audio, sound = 0, button;
+        audio = document.getElementById("audio");
+        soundButton = document.getElementById("soundButton");
+
+
+        // function init() {
+        //
+        //     button = document.getElementById("button");
+        //     ball = document.getElementById("ball");
+        //     can = document.getElementById("can");
+        //     ctx = can.getContext("2d");
+        //     ctx.strokeStyle = "black";
+        //     // initialize position, speed, spin direction
+        //     x = 98;
+        //     y = 75;
+        //     xVec = 5.5;
+        //     yVec = 0;
+        //     direc = 1;
+        //     // draw lines for the ball to bounce off of
+        //     ctx.moveTo(0, bottom + 75);
+        //     ctx.lineTo(600, bottom + 75);
+        //     ctx.lineTo(600, 0)
+        //     ctx.stroke();
+        //     // set animation to repeat every 50 msec
+        //     interval = setInterval(animate, 50);
+        // }
+        //
+        // function animate() {
+        //     model();
+        //     // clear canvas except for lines at edge
+        //     ctx.clearRect(0, 0, can.width - 1, can.height - 1);
+        //     draw();
+        // }
+        //
+        // function model() {
+        //     rot += .1 * direc;
+        //     x += xVec;
+        //     yVec += gravity;
+        //     y += yVec;
+        //     bounceIf();
+        // }
+        //
+        // function bounceIf() {
+        //     if (y >= bottom) {
+        //         audio.load();
+        //         y = bottom;
+        //         yVec = -1 * yVec - gravity;
+        //         // set audio for bottom bounce
+        //         audio.src = "audio\\Blippy Trance.mp3";
+        //         if (sound)
+        //             audio.play();
+        //     }
+        //     if (x >= right || x <= left) {
+        //         xVec *= -1;
+        //         direc *= -1;
+        //         // set audio for side bounce
+        //         audio.src = "audio\Blippy Trance.mp3";
+        //         if (sound)
+        //             audio.play();
+        //     }
+        // }
+        //
+        // function draw() {
+        //     ctx.save();
+        //     ctx.translate(x, y);
+        //     ctx.rotate(rot);
+        //     ctx.drawImage(ball, centerOffset, centerOffset);
+        //     ctx.restore();
+        // }
+
+        function soundToggle() {
+            if (!sound) {
+                audio.play();
+                sound = 1;
+                soundButton.src = "img\\sound.png";
+            } else {
+                audio.pause;
+                sound = 0;
+                soundButton.src = "img\\soundoff.png";
+            }
+        }
+    </script>
+
+</body>
+</html>

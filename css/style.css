@@ -278,7 +278,7 @@ Initializer
 
 @media (orientation: portrait) {
   .modal_message {
-    font-size: 3vh;
+    font-size: 2vh;
     line-height: 3vh;
   }
 

@@ -482,14 +482,14 @@ function gameLoop(){
 function deadState(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(dead, 0,0, canvas.width, canvas.height);
-    ctx.font="30px Helvetica";
+    ctx.font="24px Helvetica";
     ctx.fillStyle = '#ffffff';
     ctx.textBaseline="middle";
 
     ctx.textAlign="center";
-    ctx.fillText(`Sorry ${name.value}`, canvas.width*.75, canvas.height/3 );
-    ctx.fillText(`You scored ${score}.`, canvas.width*.75, canvas.height/3 +40 );
-    ctx.fillText(`Your email is ${email}.`, canvas.width*.75, canvas.height/3 +80 );
+    ctx.fillText(`Sorry ${name.value} you died.` , canvas.width*.6, canvas.height/3 );
+    ctx.fillText(`You scored ${score}.`, canvas.width*.6, canvas.height/3 +40 );
+    ctx.fillText(`Your email is ${email.value}.`, canvas.width*.6, canvas.height/3 +80 );
     ctx.font="16px Arial";
 //    drawSprite(playerSprite, player.width * player.frameX, player.height * player.frameY, player.width, player.height, player.x, player.y, player.width, player.height);
 //    ctx.fillText("Press 'Space' or touch to start.", canvas.width / 2, canvas.height/2);
