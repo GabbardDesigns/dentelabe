@@ -26,6 +26,9 @@ let version = "Candy";
 let versionUrl = 'https://cors-anywhere.herokuapp.com/https://www.gabbarddesigns.com/snackcart/data/candy.json';
 let width = canvas.width = window.innerWidth;
 let height = canvas.height = window.innerWidth;
+
+// ctx.scale(1, 2);
+
 let candyList = [];
 let level = 1;
 let enemyMax = 18 * level;
@@ -62,6 +65,20 @@ loading4.src = "img\\loading4.png"
 const loading5 = new Image();
 loading5.src = "img\\loading5.png"
 
+
+// function toggleLoading(){
+//    while (loading) {
+//       for (let i = 0; i < 6; i++) {
+//        setTimeout(() => {
+//        ctx.clearRect(0, 0, canvas.width, canvas.height);
+//        ctx.drawImage(loading1, 0, 0, canvas.width, canvas.height);
+//        //ctx.fillText(`Loading ${dots}`, .4 * width, .4 * height)
+//      }, 1000);
+//    }
+//    }
+//    }
+// }
+
 function getVersion(versionPass) {
   console.log("VersionPass = " + versionPass);
   switch (versionPass) {
@@ -91,7 +108,9 @@ const getCandyData = (myVersion) => {
     canvas.style.display = '';
     backgroundMusic.play();
   }
+
   xhr.send();
+
 };
 
 
@@ -107,11 +126,14 @@ function makeCandy() {
 }
 
 function soundToggle() {
+
   switch (silenced) {
     case true:
       for (var j = 0; j < allaudio.length; j++) {
         allaudio[j].muted = false;
-      };
+      }
+      ;
+
       soundButton.src = "img\\sound.png";
       break;
     case false:
@@ -120,14 +142,39 @@ function soundToggle() {
       }
       soundButton.src = "img\\soundoff.png";
       break;
+
   }
   silenced = !silenced;
+
 }
 
 
 let firstRun = false;
 let timer = 0;
 let sound = 0;
+// var KEY_LEFT = 37;
+// var KEY_RIGHT = 39;
+// var KEY_SPACE = 32;
+//
+// function resizedw(){
+//    setTimeout(pauseGame, 1000);
+//    width = canvas.width = window.innerWidth;
+//    height = canvas.height = window.innerHeight;
+//    player.y = .8 * width;
+//    player.x = .7 * height;
+// }
+//
+// let doit;
+//
+// window.addEventListener('resize', function(){
+//   clearTimeout(doit);
+//   doit = setTimeout(resizedw, 1000);
+// });
+//
+// function stop() {
+//      clearTimeout(timer);
+// }
+
 
 function setSquare(width, height) {
   let w = width;
@@ -143,6 +190,8 @@ function setSquare(width, height) {
 
 setSquare(55, 22)
 console.log(setSquare(55, 22))
+// const width = canvas.width = 800;
+// const height = canvas.height = 500;
 
 const keys = [];
 
@@ -167,6 +216,21 @@ let player = {
   immuneStopTime: Date.now(),
   blinking: false
 }
+let rightWall = canvas.width - player.width;
+
+
+// window.addEventListener('keydown', function (e){
+//   let code =""
+//   if (e.key !== undefined) {
+//     code = e.key;
+//   } else if (e.keyIdentifier !== undefined) {
+//     code = e.keyIdentifier;
+//   } else if (e.keyCode !== undefined) {
+//     code = e.keyCode;
+//   }
+//   keys[code] = true;
+//
+//  });
 
 function setupGame() {
   score = 0;
@@ -242,8 +306,18 @@ window.addEventListener("keydown", function (event) {
 
   }
 
+
+//  refresh();
+
+  // Consume the event so it doesn't get handled twice
+  //event.preventDefault();
 }, true);
 }
+
+// window.addEventListener("keyup", function (e){
+//   delete keys[e.key];
+//   player.moving = false;
+//  });
 
 
 function countDown() {
@@ -257,6 +331,22 @@ function countDown() {
     timeleft -= 1;
   }, 1000);
 }
+//
+// function countDown() {
+//   let i;
+//   for (i = 0; i < 3; i++) {
+//     ctx.clearRect(0, 0, canvas.width, canvas.height);
+//     ctx.drawImage(dead, 0, 0, canvas.width, canvas.height);
+//     ctx.font = "60px Helvetica";
+//     ctx.fillStyle = '#ffffff';
+//     ctx.textBaseline = "middle";
+//     ctx.textAlign = "center";
+//     ctx.fillText(`${i}`, canvas.width * .6, canvas.height / 3);
+//     debugger;
+//     sleep(2000);
+//
+//   }
+// }
 
 function sleep(milliseconds) {
   const date = Date.now();
@@ -284,15 +374,75 @@ function pauseGame(scale = false) {
   {
     startAnimating(); // restart loop
   }
-
+  scale = false;
 }
+
+//
+// function checkInput() {
+//   if (keys['ArrowLeft'] || keys['ArrowRight'] || keys['Space'])
+//   {
+//     console.log(keys);
+//     player.moving = true;
+//
+//     // if (keys['ArrowUp'] && player.y > 0) {
+//     //   player.y -= player.speed;
+//     //   player.frameY = 3;
+//     // }
+//
+//     // if (keys['ArrowDown'] && player.y < canvas.height - player.height) {
+//     //   player.y += player.speed;
+//     //   player.frameY = 0;
+//     // }
+//
+//     if (keys['ArrowLeft'] && player.x > 0) {
+//       player.x -= player.speed;
+//       player.frameY = player.hitcount * 2;
+//        updatePlayerFrame();
+//     }
+//
+//     if (keys['ArrowRight'] && player.x < canvas.width - player.width) {
+//       player.x += player.speed;
+//       player.frameY = 1 + player.hitcount * 2;
+//        updatePlayerFrame();
+//     }
+//
+//     if (keys['ArrowUp']) {
+//       pauseGame();
+//     }
+//
+//   }else {
+//       player.moving = false;
+//     }
+// }
 
 function updatePlayerFrame() {
   if (player.frameX < 3) player.frameX++
   else player.frameX = 0;
 }
 
-let fpsInterval, startTime, now, then, elapsed;
+
+function delay(n) {
+  n = n || 2000;
+  return new Promise(done => {
+    setTimeout(() => {
+      done();
+    }, n);
+  });
+}
+
+/*
+ function animate(){
+   //ctx.drawImage(background, 0,0, canvas.width, canvas.height);
+   ctx.clearRect(0,0,canvas.width, canvas.height);
+   drawSprite(playerSprite,player.width * player.frameX, player.height * player.frameY, player.width, player.height, player.x, player.y, player.width, player.height )
+   movePlayer();
+   updatePlayerFrame();
+   requestAnimationFrame(animate);
+ }
+ animate();
+*/
+
+let fps, fpsInterval, startTime, now, then, elapsed;
 
 function startAnimating(fps = 60) {
   fpsInterval = 1000 / fps;
@@ -302,14 +452,31 @@ function startAnimating(fps = 60) {
 }
 
 function animate() {
+  //  while (!gameOver) {
   if (gamePaused) return;
   ctx.scale(widthMulti, heightMulti)
   requestAnimationFrame(animate);
+  // if (canvas.width !== reSize.width || canvas.height !== reSize.height) {
+  //  alert("Ships!");
+  //   if (reSize.width>600) {
+  //     reSize.width = 600;
+  //   }
+  //   widthMulti = canvas.width/reSize.width;
+  //   heightMulti = canvas.height/reSize.height ;
+  //   alert("Ships!");
+  //   player.X = player.X * heightMulti;
+  //   player.Y = player.Y * widthMulti;
+  //
+  //   canvas.width = reSize.width;
+  //   canvas.height = reSize.height;
+  // }
 
   now = Date.now();
   elapsed = now - then;
   if (elapsed > fpsInterval) {
     then = now - (elapsed % fpsInterval);
+    // checkInput();
+    //ctx.drawImage(background, 0,0, canvas.width, canvas.height);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.font = 'bold 20px Open Sans';
     ctx.textAlign = 'center';
@@ -320,9 +487,17 @@ function animate() {
     if (!player.blinking || Math.floor(Date.now() / frequency) % 2) {
       drawSprite(playerSprite, player.width * player.frameX, player.height * player.frameY, player.width, player.height, player.x, player.y, player.width, player.height)
     }
+    // checkInput();
     drawCandy();
+
   }
+
 }
+
+//initilize candy pool
+
+
+//}
 
 function drawCandy() {
   if(!gameOver) candyList.forEach((candy) => updateCandy(candy))
@@ -362,6 +537,7 @@ function updateCandy(candy) {
 
 
 function createCandy(randNum) {
+
   buildCandy(candyData[randNum].candySpriteSRC, parseInt(candyData[randNum].w), parseInt(candyData[randNum].h))
 }
 
@@ -385,15 +561,26 @@ function buildCandy(path, w, h) {
 
 }
 
+//
+// function sleep(resolve, ms) {
+//   return new Promise(resolve => setTimeout(resolve, ms));
+// }
+
 function gameLoop() {
+  //while(!gameOver) {
   startBtn.style.display = 'none';
   loadingDIV.style.display = ""
+
+
   getCandyData(versionUrl);
   // toggleLoading();
   countDown();
   checkForKeyboardInput();
   startAnimating();
+// }
 }
+
+// gameLoop();
 
 function deadState() {
   pauseGame()
@@ -452,9 +639,99 @@ function between(x, min, max) {
   return x >= min && x <= max;
 }
 
-// *************************************
+// Credit this piece by copying the following to your credits section:
+//
+// "Frogs Legs Rag" Kevin MacLeod (incompetech.com)
+// Licensed under Creative Commons: By Attribution 4.0 License
+// http://creativecommons.org/licenses/by/4.0/
+
+//
+
+// Credit this piece by copying the following to your credits section:
+//
+// "Getting it Done" Kevin MacLeod (incompetech.com)
+// Licensed under Creative Commons: By Attribution 4.0 License
+// http://creativecommons.org/licenses/by/4.0
+
+//
+// Wholesome by Kevin MacLeod
+// Link: https://incompetech.filmmusic.io/song/5050-wholesome
+// License: http://creativecommons.org/licenses/by/4.0/
+
+//
+// Two Finger Johnny by Kevin MacLeod
+// Link: https://incompetech.filmmusic.io/song/5008-two-finger-johnny
+// License: http://creativecommons.org/licenses/by/4.0/
+
+//
+// Ditty Pong by Kevin MacLeod
+// Link: https://incompetech.filmmusic.io/song/4676-ditty-pong
+// License: http://creativecommons.org/licenses/by/4.0/
+
+//
+// Blippy Trance by Kevin MacLeod
+// Link: https://incompetech.filmmusic.io/song/5759-blippy-trance
+// License: http://creativecommons.org/licenses/by/4.0/
+
+
+// function soundToggle() {
+//
+//   switch (silenced) {
+//     case true:
+//       for (var j = 0; j < allaudio.length; j++) {
+//         allaudio[j].muted = false;
+//       }
+//       ;
+//
+//       soundButton.src = "img\\sound.png";
+//       break;
+//     case false:
+//       for (var j = 0; j < allaudio.length; j++) {
+//         allaudio[j].muted = true;
+//       }
+//       soundButton.src = "img\\soundoff.png";
+//       break;
+//
+//   }
+//   silenced = !silenced;
+//
+// }
+
+//  function musicToggle() {
+//     if (!music) {
+//         backgroundMusic.play();
+//         music = 1;
+//         soundButton.src = "img\\sound.png";
+//     } else {
+//         backgroundMusic.pause();
+//         music = 0;
+//         soundButton.src = "img\\soundoff.png";
+//     }
+// }
+
+
+// read the local play log file
+// connect to API URL (gabbarddesigns.com/gameoptions.csv)
+// create request
+
+
+//
+//  function setCookie(cname, cvalue, exdays) {
+//   let d = new Date();
+//   d.setTime(d.getTime() + (exdays*24*60*60*1000));
+//   let expires = "expires="+ d.toUTCString();
+//   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;SameSite=None;Secure]";
+// }
+//
+// function getCookie(cname) {
+//   let matches = document.cookie.match(new RegExp(
+//     "(?:^|; )" + cname.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+//   ));
+//   return matches ? decodeURIComponent(matches[1]) : undefined;
+// }
+
 // Email Validation
-// *************************************
+
 const emailValidation = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/ ;
 
 function savetoCookies() {
@@ -478,24 +755,22 @@ function savetoCookies() {
   return false;
 }
 
+
 function closeModal() {
   modal.style.display = 'none';
   overlay.style.display = 'none';
 }
-
-// *************************************
-// Field Validation
-// *************************************
 
 
 const validators = {
   // Checks the field for emptiness.
   required: element => element.value.length > 0,
 
-  // Checks if the email is in a valid format
+  // Checks if there are no numbers
+  // in the field.
   mustBeEmail: element => element.value.match(/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/),
 
-  // Checks if the selctor is selected
+  // Checks if the checkbox is checked.
   mustBeSelected: element => !element.selected
 };
 
@@ -503,17 +778,36 @@ const validators = {
 function validateElement(element) {
   resetValidation(element);
 
+  // Store all validators from the data-validate-attribute into
+  // an array.
   const rules = element.dataset.validate.split(" ");
 
+  // For every validator on the
+  // field...
   rules.forEach(rule => {
+    // ...find the corresponding
+    // validator-function from our
+    // object from #1 and call it
+    // with the element as parameter.
     if (validators[rule](element)) {
+      // If the function returns true, all is fine.
       return;
     } else {
+      // If it returns false, the
+      // validation failed.
+      // In that case, the
+      // markElementInvalid-function
+      // takes care of showing the
+      // error-message.
       markElementInvalid(element, rule);
     }
   });
 }
 
+// (3) Adds classes to an element,
+//     so it appears invalid. Also
+//     it picks the correct feedback-
+//     message and sets it visible.
 function markElementInvalid(element, validatorName) {
   element.classList.add("invalid");
   element.setAttribute("aria-invalid", true);
@@ -524,6 +818,11 @@ function markElementInvalid(element, validatorName) {
   feedbackMessage.setAttribute("aria-hidden", false);
 }
 
+// (4) Removes all traces of
+//     validation from an element,
+//     like the error-messages and
+//     the styling.
+//     (Pretty much the opposite of #3)
 function resetValidation(element) {
   element.classList.remove("invalid");
   element.setAttribute("aria-invalid", false);
@@ -535,23 +834,37 @@ function resetValidation(element) {
     });
 }
 
+// (5) Store the form and its
+//     inputs in variables.
 const form = document.getElementById("first-name-form");
 const formElements = Array.from(form.elements);
 
+// (6) Every input gets an event-listener attached.
 formElements.forEach(formElement => {
+  // Do nothing if the element has no data-validate-attribute.
   if (!formElement.dataset) return;
   if (!formElement.dataset.validate) return;
 
+  // Attach the blur-event-listener
+  // to the element.
   formElement.addEventListener("blur", () => {
+    // This means, validateElement will
+    // be called everytime the element
+    // loses focus.
     validateElement(formElement);
   });
 });
 
+// (7) We're doing what we did at #3,
+//     only on form-submit, and for
+//     every field.
 form.addEventListener("submit", event => {
   // Let's assume, everything is fine.
   let formIsValid = true;
   form.classList.remove("invalid");
 
+  // We'll check every field in the form.
+  // (same as #3)
   formElements.forEach(formElement => {
     if (!formElement.dataset) return;
     if (!formElement.dataset.validate) return;
